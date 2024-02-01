@@ -26,12 +26,55 @@
 <body>
   <h1>polaris-chip</h1>
   <!-- this is going to do whatever the tag's defaults are -->
-  <polaris-chip></polaris-chip>
+  <polaris-chip title = "news of record" link = "https://www.psu.edu"> </polaris-chip>
+  <polaris-chip title = "faculty and staff" ></polaris-chip>
+  <polaris-chip title = "sports are the only thing that matters"></polaris-chip>
+  <polaris-chip title = "grants and donations"></polaris-chip>
+
   <!-- this is going to take the tag and change the title -->
   <polaris-chip title="Cool stuff"></polaris-chip>
 
   <h1>my-card</h1>
-  <my-card></my-card>
+
+  <my-card 
+    title="Penn State University"
+    image=" https://www.worldcampus.psu.edu/sites/default/files/2018-12/1920x840_about-us_L1_1.jpg "
+    link="https://www.psu.edu/"
+    para=" Located in Central Pennsylvania "
+    button=" PSU Website "
+  ></my-card>
+
+  <my-card 
+    title="Ohio State University"
+    image="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ohio_State_Buckeyes_logo.svg/350px-Ohio_State_Buckeyes_logo.svg.png "
+    link=" https://www.osu.edu "
+    para=" Located somewhere in Ohio "
+    button=" OSU Website "
+  ></my-card>
+
+  <my-card 
+    title=" University of Michigan"
+    image=" https://cdn.britannica.com/30/221530-050-FA978136/Law-School-University-of-Michigan-Ann-Arbor-Michigan.jpg?w=400&h=300&c=crop "
+    link=" https://umich.edu "
+    para=" Located somewhere in Michigan "
+    button=" University of Michigan Website "
+  ></my-card>
+
+  <my-card 
+    title=" University of Texas "
+    image=" https://www.utexas.edu/sites/default/files/styles/utexas_hero_photo_image/public/hero-photos/maincampus_hero.jpg?itok=ZkKrhFki "
+    link=" https://www.utexas.edu "
+    para=" Located somewhere in Texas "
+    button=" University of Texas Website "
+  ></my-card>
+
+
+
+
+  <!-- <my-card image = "wow this is so coool"></my-card>
+  <my-card para = "wow this is so coool"></my-card>
+  <my-card button = "wow this is so coool"></my-card> -->
+
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
