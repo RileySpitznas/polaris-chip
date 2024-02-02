@@ -24,7 +24,7 @@ export class MyCard extends LitElement {
     return css`
       .card {
   background-color: orange;
-  border-radious: 10px;
+  border-radius: 10px;
   width: 300px;
   height: 250px;
   padding: 16px;
