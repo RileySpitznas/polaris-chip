@@ -36,20 +36,30 @@
 
   <h1>my-card</h1>
 
+  <div class="control-wrapper">
+    <button class="duplicate">Clone Card</button>
+    <button class="changetitle">Change Title</button>
+    <button id="changeimage">Change Image</button>
+    <button id="changebg">Change Background</button>
+    <button id="delete">Delete Card</button>
+    </div>
+
+    <div class = "border">
   <my-card 
     title="Penn State University"
     image=" https://www.worldcampus.psu.edu/sites/default/files/2018-12/1920x840_about-us_L1_1.jpg "
     link="https://www.psu.edu/"
     para=" Located in Central Pennsylvania "
     button=" PSU Website "
+    fancy
   ></my-card>
 
   <my-card 
-    title="Ohio State University"
-    image="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ohio_State_Buckeyes_logo.svg/350px-Ohio_State_Buckeyes_logo.svg.png "
-    link=" https://www.osu.edu "
-    para=" Located somewhere in Ohio "
-    button=" OSU Website "
+    title="Will Smith"
+    image="https://media.newyorker.com/photos/624143a04121dd98d3b8b3d9/master/w_2240,c_limit/Cunningham-Rock-Smith-Slap.jpg "
+    link=" https://www.newyorker.com/culture/cultural-comment/will-smiths-slap-and-the-ecstatic-blur-that-followed-at-the-oscars "
+    para=" This is will smith "
+    button=" Will Smith Slap "
   ></my-card>
 
   <my-card 
@@ -75,7 +85,10 @@
     para=" Located somewhere in Florida "
     button=" University of Florida Website "
   ></my-card>
+  </div>
 
+
+  
 
 
 
@@ -87,6 +100,46 @@
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
+
+<script>
+
+document.querySelector('.duplicate').addEventListener('click', function(event) {
+  const newCard = document.querySelector('my-card').cloneNode(true);
+  // Q1: this is currently appending to the body;
+  // how can we append so that it's placed right next to the other card?
+  if (document.querySelectorAll('my-card').length !== 10){
+  document.querySelector('.border').appendChild(newCard);
+}
+}); 
+
+document.querySelector('.changetitle').addEventListener('click', function(e){
+     document.querySelector('my-card').title = "New title" ;
+})
+
+document.querySelector('#changeimage').addEventListener('click', function(e){
+     document.querySelector('my-card').image = "https://external-preview.redd.it/penn-state-doesnt-have-a-rival-in-an-expanded-big-ten-v0-Zfp9aD27c-HZvqkWEzHZroIRtKQKskv8r-1dwA4eiMI.jpg?auto=webp&s=1defc83f4a7f7f0f49c05536556cf83ade8dd961";              
+});
+
+document.querySelector('#changebg').addEventListener('click', function(e){
+    const cards = document.querySelectorAll("my-card");   
+  
+     cards.forEach(card => {
+        const shadowRoot = card.shadowRoot;
+
+        shadowRoot.querySelector(".card").classList.toggle('change-background');
+     });
+});
+
+document.querySelector('#delete').addEventListener('click', function(e){
+     if (document.querySelectorAll('my-card').length !== 1)
+     {
+      document.querySelector('my-card').remove();
+     }
+});
+
+</script>
+
+
 </body>
 
 </html>

@@ -17,21 +17,36 @@ export class MyCard extends LitElement {
     this.image = "Default";
     this.para = "Default";
     this.button = "Default";
+    this.fancy = false;
 
   }
 
   static get styles() {
     return css`
+    
+    :host([fancy]) {
+      display: block;
+      background-color: pink;
+      border: 2px solid fuchsia;
+      box-shadow: 10px 5px 5px red;
+    }
+
+    :host  {
+      display: flex;
+
+    }
+  
       .card {
-  background-color: orange;
-  border-radius: 10px;
-  width: 300px;
-  height: 250px;
-  padding: 16px;
-  float: left;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
+        background-color: orange;
+        border-radius: 10px;
+        width: 300px;
+        height: 250px;
+        padding: 16px;
+        /* float: left; */
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+
 .change-background{
   background-color: blue;
 }
@@ -63,7 +78,7 @@ export class MyCard extends LitElement {
     font-size: 18px;
     margin: 4px 4px 4px 80px;
     padding: 16px;
-    display: flex;
+    display: block;
   }
 }
 
@@ -85,6 +100,16 @@ export class MyCard extends LitElement {
 
     
   `}
+
+openChanged(e) {
+  console.log(e.newState);
+  if (e.newState === "open") {
+    this.fancy = true;
+  }
+  else {
+    this.fancy = false;
+  }
+}
   
 
   render() {
@@ -95,7 +120,12 @@ export class MyCard extends LitElement {
         <div class="heading">${this.title}</div>
         
         <img src="${this.image}" class="image" width=120px height=120px>
-      <p class="para"> ${this.para} </p>
+        <details ?open="${this.fancy}" @toggle="${this.openChanged}">
+            <summary>Description</summary>
+            <div>
+              <slot>${this.para}</slot>
+            </div>
+          </details>
       <a href="${this.link}">
         <button class="btn">${this.button}</button>
 
@@ -113,8 +143,8 @@ export class MyCard extends LitElement {
       image: {type: String},
       link: {type: String},
       para: {type: String},
-      button: {type: String}
-      
+      button: {type: String},
+      fancy: { type: Boolean, reflect: true }
     };
   }
 }
