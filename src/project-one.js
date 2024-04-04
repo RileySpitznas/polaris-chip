@@ -40,8 +40,8 @@ export class ProjectOne extends DDD {
         }
 
       .mainBody {
-          height: 200px;
-          width: 200px;
+         /* height: 300px;
+          width: 300px;
           max-width: 400px;
           max-height: 400px;
           display: flex;
@@ -49,7 +49,14 @@ export class ProjectOne extends DDD {
           background-color: var(--ddd-theme-default-beaverBlue);
           border: var(--ddd-border-lg);
           color: var(--ddd-theme-default-keystoneYellow);
+          z-index:1; */
+          max-width: 680px;
+          min-width: 250px;
+          height: 250px;
+          background-color:var(--ddd-theme-default-beaverBlue);
           z-index:1;
+          align-items: center;
+          
         }
 
       .openPop {
@@ -63,7 +70,7 @@ export class ProjectOne extends DDD {
           border: var(--ddd-border-lg);
           color: var(--ddd-theme-default-keystoneYellow);
           position: relative;
-          right:200px; /* Initially hidden to the right */
+          right:200px; 
           transition: right 0.8s ease;
           opacity: 0;
           z-index:0;
@@ -95,7 +102,7 @@ export class ProjectOne extends DDD {
         }
 
       .rpgAdd{
-        width: 50%;
+        width: 100px;
         display: inline-flex;
         margin: var(--ddd-spacing-6);
             
@@ -104,7 +111,10 @@ export class ProjectOne extends DDD {
       .headers{
         margin:10px;
         }
-      
+        .spacer{
+          height:75px;
+        }
+
       :host([opened]) .popUp{
           right:0;
           opacity: 1;
@@ -115,18 +125,32 @@ export class ProjectOne extends DDD {
           
         }
 
-      rpg-character{
-          max-width: 5vw;
-          max-height: 5vh;
-          padding: 28px;
-          margin: 28px;
+        .verticalStyle{
+          display: flex;
+          flex-direction: column; 
+        }
+      
+
+        .searchChar{
+          max-width: 100px;
+          max-height: 200px;
+          padding: 15px;
+          /* margin: 58px; */
+          
         }
 
      .partyCont{
+        /*display:flex;
+        flex-direction:row; */
         display:flex;
         flex-direction:row;
-        
-        }
+        margin-right: 60px;
+        height: 150px;
+        min-width: 100px;
+        max-width: 650px;
+        margin-bottom: 8px;
+      }
+
      .buttonCont{
             width:100%;
             display:flex;
@@ -142,6 +166,35 @@ export class ProjectOne extends DDD {
            width:20%;
         }
 
+                    //Tooltip stuff
+        .tooltip {
+        position: relative;
+        display: inline-block; 
+        cursor: pointer; 
+        margin-bottom:8px;
+      }
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 60px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 10px 0;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: 25px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size:12px;
+     }
+      .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+      }
+                  //end of tooltip stuff 
+
     `];
   }
 
@@ -154,6 +207,9 @@ export class ProjectOne extends DDD {
         }
         this.party.push(member);
         this.requestUpdate();
+
+        this.shadowRoot.querySelector("#nameInput").value = "";
+        this.shadowRoot.querySelector("#nameInput").focus();
   }
 
   targetClicked(e) {
@@ -168,6 +224,23 @@ export class ProjectOne extends DDD {
         }
     }
   }
+  handleInput(event)
+      {
+        var userInput = event.target.value;
+        userInput = userInput.slice(0,7);
+
+        const invalidChar = userInput.match(/[^a-z0-9]/g)
+        console.log(userInput.length)
+        if(invalidChar)
+        {
+          alert(`The character '${invalidChar[0]}' is not allowed`);
+          userInput = userInput.replace(invalidChar[0], '');
+
+        }
+
+        event.target.value = userInput;
+
+      }
 
   openClick(){
     this.opened = !this.opened;
@@ -203,13 +276,21 @@ export class ProjectOne extends DDD {
         <div class="header">
          Add Users
         </div>
-          <div class="partCont">
+          <div class="partyCont" data-tooltip = "Click to Delete">
             ${this.party.map((member) => html`
-      
+            <div class="tooltip">
+          <div class="verticalStyle">
               <rpg-character id="${member.id}" @click="${this.targetClicked}" seed = "${member.name}" > </rpg-character>
-              <div style= 'font-size:16px; text-align:center;' > ${member.name}</div>
+              <span class="tooltiptext">Click to Delete</span>
+              <div style= 'font-size:20px; text-align:center;' > ${member.name}</div>
+              
+          </div>
+  </div>
+          
+
             `)}
           </div>
+          <div class="spacer"> </div>
       <div class="buttonCont">
         <div id="big-break"></div>
           <button class="openPop"  @click="${this.openClick}" > Add character</button>
@@ -224,16 +305,16 @@ export class ProjectOne extends DDD {
     
       <div class=popUp>
       
-          <input id="nameInput" type="text" value=${this.personName} @input=${this.updateName}>
-          <rpg-character id="rpg" seed= ${this.personName}> </rpg-character>
+          <input id="nameInput" type="text" value=${this.personName} @input=${this.updateName} @keyup=${this.handleInput}>
+          <rpg-character id="rpg" class="searchChar" seed= ${this.personName}> </rpg-character>
           
-          <button class= "rpgAdd" @click="${this.addToParty}" > Add to Party</button>
+          <button class= "rpgAdd" @click="${this.addToParty}" ?disabled="${this.party.length >=5}"> Add to Party</button>
       </div>
     </div>     
   </div>
     `;
   }
-   
+
 
    render() {     
     return this.main();
